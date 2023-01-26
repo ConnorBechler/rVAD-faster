@@ -9,7 +9,7 @@ Below are the speed comparison of this implementation vs the original implementa
 
 |Original|Improved|
 |-|-|
-|7.23s|410s|
+|410s|7.23s|
 
 Note that there are minor differences in results compared to the original python algorithm provided by the authors due to float inaccuracies. In the test file I used there were 140912 windows, and my implementation differed in 27 of them.
 
