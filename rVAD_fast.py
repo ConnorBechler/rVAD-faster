@@ -26,6 +26,7 @@ def rVAD_fast(finwav, fvad, ftThres=0.5, vadThres=0.4):
 
 
     # --spectral flatness --
+    total_time = time.perf_counter()
     pv01=numpy.zeros(nfr10)
     pv01[numpy.less_equal(ft, ftThres)]=1 
     pitch=deepcopy(ft)
@@ -54,11 +55,10 @@ def rVAD_fast(finwav, fvad, ftThres=0.5, vadThres=0.4):
     print(time.perf_counter() - start)
 
     start = time.perf_counter()
-    with open('load', 'wb') as f:
-        pickle.dump((fdata,  nfr10, flen, fsh10, ENERGYFLOOR, pv01, pvblk, vadThres), f)
+
     vad_seg=speechproc.snre_vad(fdata,  nfr10, flen, fsh10, ENERGYFLOOR, pv01, pvblk, vadThres)
     print(time.perf_counter() - start)
-
+    print(time.perf_counter()-total_time)
     numpy.savetxt(fvad, vad_seg.astype(int),  fmt='%i')
 
 if __name__ == '__main__':
