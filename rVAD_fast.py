@@ -4,6 +4,7 @@ import numpy
 from scipy.signal import lfilter
 from copy import deepcopy
 import time
+import sys
 
 import speechproc as speechproc
 # Refs:
@@ -57,9 +58,12 @@ def rVAD_fast(finwav, fvad, ftThres=0.5, vadThres=0.4):
     start = time.perf_counter()
 
     vad_seg=speechproc.snre_vad(fdata,  nfr10, flen, fsh10, ENERGYFLOOR, pv01, pvblk, vadThres)
+    print(len(vad_seg), vad_seg)
     print(time.perf_counter() - start)
     print(time.perf_counter()-total_time)
     numpy.savetxt(fvad, vad_seg.astype(int),  fmt='%i')
 
 if __name__ == '__main__':
-    rVAD_fast('./audio_16000.wav', 'res2')
+    finwav=str(sys.argv[1])
+    fvad=str(sys.argv[2])
+    rVAD_fast(finwav, fvad)
