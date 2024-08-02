@@ -19,10 +19,12 @@ import speechproc as speechproc
 winlen, ovrlen, pre_coef, nfilter, nftt = 0.025, 0.01, 0.97, 20, 512
 opts=1
 
-def rVAD_fast(finwav, fvad, ftThres=0.5, vadThres=0.4):
+def rVAD_fast(finwav, sr=None, fvad=None, ftThres=0.5, vadThres=0.4):
     if isinstance(finwav, str):
         fs, data = speechproc.speech_wave(finwav)
-    ft, flen, fsh10, nfr10 =speechproc.sflux(data, fs, winlen, ovrlen, nftt)
+    elif sr != None:
+         fs, data = sr, finwav
+    ft, flen, fsh10, nfr10 = speechproc.sflux(data, fs, winlen, ovrlen, nftt)
 
 
     # --spectral flatness --
